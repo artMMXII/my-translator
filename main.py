@@ -1,20 +1,30 @@
 import requests
+from tkinter import messagebox, Tk, Canvas, Frame, Entry, Button
 
-api_url = 'https://developers.lingvolive.com/api/v1/Minicard'
 
-param = {
-    'text': input(),
-    'srcLang': 1049,
-    'dstLang': 1033,
-}
+def translator():
+    api_url = 'https://developers.lingvolive.com/api/v1/Minicard'
 
-header = {
-    'Authorization': ('Bearer ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmxlSEFpT2pFMk56VXhOVFU0T1RNc0lrMXZaR'
-                      '1ZzSWpwN0lrTm9ZWEpoWTNSbGNuTlFaWEpFWVhraU9qVXdNREF3TENKVmMyVnlTV1FpT2pjME5qSXNJbFZ1YVhGMVpVbGtJa'
-                      'm9pWVRBeE1tUTRaRE10TVdGbU1TMDBOekF4TFdFMk5UVXROR0pqTlRnNVpUZGhPRFJtSW4xOS5mSUxYdVB3YjhCblRRZTR2'
-                      'MlhXdW5aZUdjbUI1UmdYT3JnUVhZNE1ZYnk4')
-}
+    get_a_new_bearer_token = requests.post('https://developers.lingvolive.com/api/v1.1/authenticate',
+                                           headers={'Authorization': 'Basic YTAxMmQ4ZDMtMWFmMS00NzAxLW'
+                                                                     'E2NTUtNGJjNTg5ZTdhODRmOmY4YmJhM2Z'
+                                                                     'jYzY4MTQzMWRiZGU0MmJhYTNhYWEyNmE4'})
 
-res = requests.get(api_url, params=param, headers=header)
+    param = {
+        'text': 'кот',
+        'srcLang': 1049,
+        'dstLang': 1033,
+    }
 
-print(res.json()['Translation']['Translation'])
+    header = {
+        'Authorization': 'Bearer ' + get_a_new_bearer_token.text
+    }
+
+    res = requests.get(api_url, params=param, headers=header)
+
+    print(res.json()['Translation']['Translation'])
+
+    print()
+
+
+translator()
